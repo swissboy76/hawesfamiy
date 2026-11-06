@@ -22,12 +22,52 @@ const data=[
 {id:'maria',name:'Maria Dowding Billington Hawes',dates:'1816–1886',role:'Singer · collateral family branch',generation:'Daughter of William Hawes',tag:'The musical family',intro:'The wider Hawes family included Maria Billington Hawes, a notable nineteenth-century contralto.',chapters:[['A life on the stage','Maria is recorded in the Ancestry GEDCOM among the children of William Hawes. Public biographical material describes her work as a singer, including association with Mendelssohn’s oratorios.'],['A family beyond the direct line','This branch helps tell the wider story of the Hawes family, but the precise relationship details and birth records should be checked against original sources.']],facts:[['Born','1816'],['Died','1886'],['Occupation','Singer']],sources:[['Maria Billington Hawes biography','https://en.wikipedia.org/wiki/Maria_Billington_Hawes']],related:['william','henry']}
 ];
 const byId=Object.fromEntries(data.map(x=>[x.id,x]));
+// Wikipedia's pageimages API resolves the lead image of the exact biography, rather
+// than relying on ambiguous web-image searches for people with similar names.
+const wikipediaPortraits = {
+  william: {title:'William_Hawes_(composer)', article:'https://en.wikipedia.org/wiki/William_Hawes_(composer)'},
+  maria: {title:'Maria_Billington_Hawes', article:'https://en.wikipedia.org/wiki/Maria_Billington_Hawes'}
+};
+async function loadWikipediaPortraits(){
+  const records=Object.entries(wikipediaPortraits);
+  for(const [id,info] of records){
+    try {
+      const u='https://en.wikipedia.org/w/api.php?origin=*&action=query&format=json&prop=pageimages&pithumbsize=800&titles='+encodeURIComponent(info.title);
+      const response=await fetch(u);
+      if(!response.ok)continue;
+      const result=await response.json();
+      const page=Object.values(result.query?.pages||{})[0];
+      const src=page?.thumbnail?.source;
+      if(!src || !/^https:\/\/upload\.wikimedia\.org\//.test(src))continue;
+      document.querySelectorAll('[data-portrait-person="'+id+'"]').forEach(slot=>{
+        const img=document.createElement('img');
+        img.src=src;
+        img.alt='Portrait published on the Wikipedia article for '+byId[id].name;
+        img.loading='lazy';
+        img.decoding='async';
+        img.addEventListener('error',()=>img.remove());
+        slot.appendChild(img);
+        const label=slot.querySelector('.no-photo');
+        if(label)label.textContent='Portrait from Wikipedia';
+      });
+      document.querySelectorAll('[data-credit-person="'+id+'"]').forEach(el=>{
+        const link=document.createElement('a');
+        link.href=info.article;
+        link.target='_blank';
+        link.rel='noopener noreferrer';
+        link.textContent='Portrait source: Wikipedia (open image for original file credit)';
+        el.appendChild(link);
+      });
+    }catch(e){ /* Keep the honest placeholder if Wikipedia is unavailable. */ }
+  }
+}
 const profileUrl=id=>'?person='+encodeURIComponent(id);
 const icon='<svg class="silhouette" viewBox="0 0 90 115" aria-hidden="true"><circle cx="45" cy="30" r="23" fill="#655e4c"/><path d="M4 110c0-32 17-50 41-50s41 18 41 50" fill="#655e4c"/></svg>';
-const portrait=(p,large=false)=>'<div class="'+(large?'bio-portrait':'portrait')+'">'+icon+'<span class="no-photo">Portrait to be added</span></div>';
+const portrait=(p,large=false)=>'<div class="'+(large?'bio-portrait':'portrait')+'" data-portrait-person="'+p.id+'">'+icon+'<span class="no-photo">Portrait to be added</span></div>';
 const tree=document.getElementById('tree');
 const lineage=['william','henry','edward','walter','eric'];
 lineage.forEach((id,i)=>{const p=byId[id];if(i)tree.insertAdjacentHTML('beforeend','<div class="linkline" aria-hidden="true"></div>');const wrap=document.createElement('div');wrap.className='generation';wrap.innerHTML='<a class="person-card" href="'+profileUrl(p.id)+'" aria-label="Read biography of '+p.name+'">'+portrait(p)+'<div class="person-body"><small>'+p.generation+'</small><h3>'+p.name+'</h3><p>'+p.dates+' · '+p.role+'</p><span class="read">View life story & records →</span></div></a>'+(id==='william'?'<div class="branchrow"><a class="branchcard" href="?person=maria">↳ Daughter: Maria Billington Hawes →</a></div>':'');tree.appendChild(wrap)});
 const id=new URLSearchParams(window.location.search).get('person');
-if(id&&byId[id]){const p=byId[id];document.getElementById('homepage').classList.add('hidden');document.getElementById('biography').classList.remove('hidden');document.title=p.name+' — The Hawes Family Archive';document.getElementById('bioPortrait').innerHTML=icon+'<span>Verified photograph needed</span>';document.getElementById('bioSubtitle').textContent=p.generation+' · '+p.tag;document.getElementById('bioName').textContent=p.name;document.getElementById('bioYears').textContent=p.dates;document.getElementById('bioIntro').textContent=p.intro;document.getElementById('bioNarrative').innerHTML=p.chapters.map(c=>'<h2>'+c[0]+'</h2><p>'+c[1]+'</p>').join('');document.getElementById('bioFacts').innerHTML=p.facts.map(f=>'<div class="fact"><b>'+f[0]+'</b><span>'+f[1]+'</span></div>').join('');document.getElementById('bioSources').innerHTML=p.sources.map(s=>'<li><a href="'+s[1]+'" target="_blank" rel="noopener">'+s[0]+' ↗</a></li>').join('');document.getElementById('bioRelated').innerHTML=p.related.map(x=>'<a href="'+profileUrl(x)+'">'+byId[x].name+' →</a>').join('')}
+if(id&&byId[id]){const p=byId[id];document.getElementById('homepage').classList.add('hidden');document.getElementById('biography').classList.remove('hidden');document.title=p.name+' — The Hawes Family Archive';document.getElementById('bioPortrait').setAttribute('data-portrait-person',p.id);document.getElementById('bioPortrait').innerHTML=icon+'<span class="no-photo">Portrait to be added</span>';document.getElementById('bioPortrait').insertAdjacentHTML('afterend','<div data-credit-person="'+p.id+'" class="small"></div>');document.getElementById('bioSubtitle').textContent=p.generation+' · '+p.tag;document.getElementById('bioName').textContent=p.name;document.getElementById('bioYears').textContent=p.dates;document.getElementById('bioIntro').textContent=p.intro;document.getElementById('bioNarrative').innerHTML=p.chapters.map(c=>'<h2>'+c[0]+'</h2><p>'+c[1]+'</p>').join('');document.getElementById('bioFacts').innerHTML=p.facts.map(f=>'<div class="fact"><b>'+f[0]+'</b><span>'+f[1]+'</span></div>').join('');document.getElementById('bioSources').innerHTML=p.sources.map(s=>'<li><a href="'+s[1]+'" target="_blank" rel="noopener">'+s[0]+' ↗</a></li>').join('');document.getElementById('bioRelated').innerHTML=p.related.map(x=>'<a href="'+profileUrl(x)+'">'+byId[x].name+' →</a>').join('')}
+loadWikipediaPortraits();
 </script></body></html>
