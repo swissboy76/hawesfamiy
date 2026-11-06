@@ -63,7 +63,7 @@ async function getArticlePortrait(title,person){
   // Avoid mixing William the composer up with the earlier physician.
   const candidates=files.filter(name=>{
     const n=name.replace(/[_-]/g,' ').toLowerCase();
-    return /\\.(jpg|jpeg|png|webp)$/i.test(name)
+    return /\.(jpg|jpeg|png|webp)$/i.test(name)
       && n.includes(person==='william'?'hawes':'maria')
       && !/logo|icon|flag|map|ridley|physician|medical|coat of arms/i.test(n);
   });
