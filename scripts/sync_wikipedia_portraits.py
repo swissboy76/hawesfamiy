@@ -72,7 +72,7 @@ def find_image(title):
         if url.startswith("//"):
             url = "https:" + url
         if url.startswith("https://upload.wikimedia.org/") and not re.search(
-            r"wiki(?:media)?|logo|icon|svg", urllib.parse.urlparse(url).path, re.I
+            r"(?:logo|icon|\\.svg$)", urllib.parse.urlparse(url).path.rsplit("/", 1)[-1], re.I
         ):
             return url, article
     raise ValueError("No suitable portrait image found on " + article)
