@@ -50,5 +50,18 @@ function markBranch(){const active=branches[document.getElementById('branch').va
 document.getElementById('branch').onchange=()=>{markBranch();const target={all:'william',william:'william',thomas:'thomas',henry:'henry'}[document.getElementById('branch').value];if(target){const p=map[target];viewport.scrollLeft=Math.max(0,(p.x-80)*zoom);viewport.scrollTop=Math.max(0,(p.y-240)*zoom)}};
 function show(id,move=false){const p=map[id];if(!p)return;current=id;document.querySelectorAll('.node').forEach(n=>n.classList.toggle('selected',n.id==='node-'+id));document.getElementById('dGen').textContent='Generation '+(p.gen+1)+' · '+p.status;document.getElementById('dName').textContent=p.name;document.getElementById('dBio').textContent=p.desc;document.getElementById('dStatus').textContent=p.birth+(p.spouse?' · Spouse/partner in family records: '+p.spouse:'');const names=(ids)=>ids?.map(x=>map[x]?.name).join(', ')||'Not recorded in this extract';document.getElementById('dRel').textContent='Parents: '+names(p.parents)+' | Children: '+names(p.children);const links=document.getElementById('dLinks');links.replaceChildren();if(p.profile){const a=document.createElement('a');a.href='profiles.html?person='+p.profile;a.textContent='Read biography →';links.appendChild(a)}if(id==='eric'){const a=document.createElement('a');a.className='secondary';a.href='wedding-eric-kathleen.html';a.textContent='Wedding photograph →';links.appendChild(a)}if(id==='maria'||id==='william'){const a=document.createElement('a');a.className='secondary';a.href=id==='maria'?'https://en.wikipedia.org/wiki/Maria_Billington_Hawes':'https://en.wikipedia.org/wiki/William_Hawes_(composer)';a.textContent='Historical biography ↗';a.target='_blank';a.rel='noopener';links.appendChild(a)}if(move){document.getElementById('personDetail').scrollIntoView({behavior:'smooth',block:'nearest'})}}
 size();show('william');markBranch();
-async function portraits(){for(const p of people.filter(p=>p.wiki)){try{const u='https://en.wikipedia.org/w/api.php?origin=*&action=query&format=json&prop=pageimages&pithumbsize=300&titles='+encodeURIComponent(p.wiki);const r=await fetch(u);if(!r.ok)continue;const d=await r.json();const page=Object.values(d.query?.pages||{})[0];const src=page?.thumbnail?.source;if(!src?.startsWith('https://upload.wikimedia.org/'))continue;const img=document.querySelector('img[data-wiki="'+p.wiki+'"]');img.src=src;img.onerror=()=>img.remove()}catch(e){}}}portraits();
+async function portraits(){
+  try {
+    const response=await fetch('images/portraits.json',{cache:'no-store'});
+    if(!response.ok)return;
+    const manifest=await response.json();
+    for(const p of people.filter(p=>p.wiki)){
+      const entry=manifest[p.id];
+      if(!entry?.src || !entry?.article)continue;
+      const image=document.querySelector('img[data-wiki="'+p.wiki+'"]');
+      if(image){image.src=entry.src;image.alt='Portrait from '+entry.article;image.onerror=()=>{image.remove()}}
+    }
+  }catch(e){/* The placeholders remain when no archived image is present. */}
+}
+portraits();
 </script></body></html>
