@@ -1,6 +1,6 @@
 # The Hawes Family Archive
 
-An evidence-led, mobile-friendly family history site, tracing the historical Hawes lineage from William Hawes (1785–1846) through five historical generations. The starting research source is the Ancestry GEDCOM exported on 6 November 2026.
+An evidence-led, mobile-friendly shared Hawes family archive with an interactive branching tree, personal biographies, historical photographs, and research sources. It is designed for all branches of the family, without describing relationships relative to any individual visitor. Research sources include the Ancestry and Findmypast GEDCOM exports from 6 November 2026.
 
 ## Features
 - Interactive ancestor cards with evidence notes
