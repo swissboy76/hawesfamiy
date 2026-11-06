@@ -37,7 +37,11 @@ const branches={all:null,william:['william','thomas','elizabeth','henry','maria'
 const w=1940,h=1610,canvas=document.getElementById('canvas'),scaled=document.getElementById('scaled'),svg=document.getElementById('connectors'),nodes=document.getElementById('nodes'),viewport=document.getElementById('viewport');
 canvas.style.width=w+'px';canvas.style.height=h+'px';svg.setAttribute('width',w);svg.setAttribute('height',h);svg.setAttribute('viewBox','0 0 '+w+' '+h);
 const human='<svg viewBox="0 0 60 75" aria-hidden="true"><circle cx="30" cy="22" r="17" fill="#77715f"/><path d="M2 74c0-26 11-36 28-36s28 10 28 36" fill="#77715f"/></svg>';
-function portrait(p){return '<div class="thumb">'+human+(p.wiki?'<img data-wiki="'+p.wiki+'" alt="" loading="lazy">':'')+'</div>'}
+const localPortraits={william:'images/william-hawes.jpg',maria:'images/maria-billington-hawes.jpg'};
+function portrait(p){
+  const src=localPortraits[p.id];
+  return '<div class="thumb">'+human+(src?'<img src="'+src+'" alt="Family-supplied portrait of '+p.name+'" loading="lazy" decoding="async">':'')+'</div>';
+}
 for(let gen=0;gen<6;gen++){const cap=document.createElement('div');cap.className='genhead';cap.style.left=(50+310*gen)+'px';cap.textContent='Generation '+(gen+1);canvas.appendChild(cap)}
 const edgeNodes=[];
 people.forEach(p=>{const b=document.createElement('button');b.type='button';b.className='node';b.id='node-'+p.id;b.style.left=p.x+'px';b.style.top=p.y+'px';b.innerHTML=portrait(p)+'<div class="body"><b>'+p.name+'</b><small>'+p.birth+(p.birth?' · ':'')+p.note+'</small>'+(p.spouse?'<em>+ '+p.spouse+'</em>':'')+'</div><span class="dot">↗</span>';b.setAttribute('aria-label','Explore '+p.name);b.onclick=()=>show(p.id,true);nodes.appendChild(b);(p.parents||[]).forEach(pid=>{const parent=map[pid];if(!parent)return;const path=document.createElementNS('http://www.w3.org/2000/svg','path');const sy=parent.y+56,ey=p.y+56,sx=parent.x+260,ex=p.x;const mid=sx+(ex-sx)*.5;path.setAttribute('d','M '+sx+' '+sy+' H '+mid+' V '+ey+' H '+ex);svg.appendChild(path);edgeNodes.push({pid,id:p.id,path})})});
@@ -48,60 +52,10 @@ document.getElementById('zoomIn').onclick=()=>applyZoom(zoom+.13);document.getEl
 document.getElementById('reset').onclick=()=>{zoom=.78;size();viewport.scrollLeft=0;viewport.scrollTop=0;document.getElementById('branch').value='all';markBranch()};
 function markBranch(){const active=branches[document.getElementById('branch').value];people.forEach(p=>{const isMatch=!active||active.includes(p.id);document.getElementById('node-'+p.id).classList.toggle('dimmed',!isMatch)});edgeNodes.forEach(e=>e.path.classList.toggle('dimmed',!!active&&!(active.includes(e.pid)&&active.includes(e.id))))}
 document.getElementById('branch').onchange=()=>{markBranch();const target={all:'william',william:'william',thomas:'thomas',henry:'henry'}[document.getElementById('branch').value];if(target){const p=map[target];viewport.scrollLeft=Math.max(0,(p.x-80)*zoom);viewport.scrollTop=Math.max(0,(p.y-240)*zoom)}};
-function show(id,move=false){const p=map[id];if(!p)return;current=id;document.querySelectorAll('.node').forEach(n=>n.classList.toggle('selected',n.id==='node-'+id));document.getElementById('dGen').textContent='Generation '+(p.gen+1)+' · '+p.status;document.getElementById('dName').textContent=p.name;document.getElementById('dBio').textContent=p.desc;document.getElementById('dStatus').textContent=p.birth+(p.spouse?' · Spouse/partner in family records: '+p.spouse:'');const names=(ids)=>ids?.map(x=>map[x]?.name).join(', ')||'Not recorded in this extract';document.getElementById('dRel').textContent='Parents: '+names(p.parents)+' | Children: '+names(p.children);const links=document.getElementById('dLinks');links.replaceChildren();if(p.profile){const a=document.createElement('a');a.href='profiles.html?person='+p.profile;a.textContent='Read biography →';links.appendChild(a)}if(id==='eric'){const a=document.createElement('a');a.className='secondary';a.href='wedding-eric-kathleen.html';a.textContent='Wedding photograph →';links.appendChild(a)}if(id==='maria'||id==='william'){const a=document.createElement('a');a.className='secondary';a.href=id==='maria'?'https://en.wikipedia.org/wiki/Maria_Billington_Hawes':'https://en.wikipedia.org/wiki/William_Hawes_(composer)';a.textContent='Historical biography ↗';a.target='_blank';a.rel='noopener';links.appendChild(a)}if(move){document.getElementById('personDetail').scrollIntoView({behavior:'smooth',block:'nearest'})}}
+function show(id,move=false){const p=map[id];if(!p)return;current=id;document.querySelectorAll('.node').forEach(n=>n.classList.toggle('selected',n.id==='node-'+id));document.getElementById('dGen').textContent='Generation '+(p.gen+1)+' · '+p.status;document.getElementById('dName').textContent=p.name;document.getElementById('dBio').textContent=p.desc;document.getElementById('dStatus').textContent=p.birth+(p.spouse?' · Spouse/partner in family records: '+p.spouse:'')+(localPortraits[p.id]?' · Family-supplied portrait':'');const names=(ids)=>ids?.map(x=>map[x]?.name).join(', ')||'Not recorded in this extract';document.getElementById('dRel').textContent='Parents: '+names(p.parents)+' | Children: '+names(p.children);const links=document.getElementById('dLinks');links.replaceChildren();if(p.profile){const a=document.createElement('a');a.href='profiles.html?person='+p.profile;a.textContent='Read biography →';links.appendChild(a)}if(id==='eric'){const a=document.createElement('a');a.className='secondary';a.href='wedding-eric-kathleen.html';a.textContent='Wedding photograph →';links.appendChild(a)}if(id==='maria'||id==='william'){const a=document.createElement('a');a.className='secondary';a.href=id==='maria'?'https://en.wikipedia.org/wiki/Maria_Billington_Hawes':'https://en.wikipedia.org/wiki/William_Hawes_(composer)';a.textContent='Historical biography ↗';a.target='_blank';a.rel='noopener';links.appendChild(a)}if(move){document.getElementById('personDetail').scrollIntoView({behavior:'smooth',block:'nearest'})}}
 size();show('william');markBranch();
 // Retrieve images actually embedded in the named Wikipedia articles.
 // pageimages may be empty for articles without an infobox, so inspect
 // the article's media list, identify a filename mentioning the sitter,
 // and then request its actual Wikimedia thumbnail URL.
-async function getArticlePortrait(title,person){
-  const api='https://en.wikipedia.org/w/api.php?origin=*&format=json&';
-  const r=await fetch(api+new URLSearchParams({action:'parse',page:title,prop:'images'}));
-  if(!r.ok)throw Error('Wikipedia unavailable');
-  const d=await r.json();
-  const files=d.parse?.images||[];
-  // Avoid mixing William the composer up with the earlier physician.
-  const candidates=files.filter(name=>{
-    const n=name.replace(/[_-]/g,' ').toLowerCase();
-    return /\.(jpg|jpeg|png|webp)$/i.test(name)
-      && n.includes(person==='william'?'hawes':'maria')
-      && !/logo|icon|flag|map|ridley|physician|medical|coat of arms/i.test(n);
-  });
-  // Prefer pictures explicitly identifying the sitter.
-  const chosen=candidates.sort((a,b)=>{
-    const score=n=>{
-      n=n.toLowerCase();
-      return (n.includes('william hawes')&&person==='william'?10:0)
-        +(n.includes('maria')&&person==='maria'?10:0)
-        +(n.includes('medland')&&person==='william'?5:0);
-    };
-    return score(b)-score(a);
-  })[0];
-  if(!chosen) return null;
-  const q=await fetch(api+new URLSearchParams({
-    action:'query',prop:'imageinfo',iiprop:'url',iiurlwidth:'800',
-    titles:'File:'+chosen
-  }));
-  if(!q.ok)return null;
-  const data=await q.json();
-  const page=Object.values(data.query?.pages||{})[0];
-  const info=page?.imageinfo?.[0];
-  const url=info?.thumburl||info?.url;
-  if(!url||!url.startsWith('https://upload.wikimedia.org/'))return null;
-  return {src:url,file:chosen};
-}
-async function portraits(){
-  for(const p of people.filter(p=>p.wiki)){
-    try{
-      const item=await getArticlePortrait(p.wiki,p.id);
-      if(!item)continue;
-      const img=document.querySelector('img[data-wiki="'+p.wiki+'"]');
-      if(!img)continue;
-      img.src=item.src;
-      img.alt='Portrait of '+p.name+' from Wikipedia: '+item.file;
-      img.addEventListener('error',()=>img.remove(),{once:true});
-    }catch(e){/* Keep neutral placeholders rather than show a wrong person. */}
-  }
-}
-portraits();
 </script></body></html>
