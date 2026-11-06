@@ -50,18 +50,58 @@ function markBranch(){const active=branches[document.getElementById('branch').va
 document.getElementById('branch').onchange=()=>{markBranch();const target={all:'william',william:'william',thomas:'thomas',henry:'henry'}[document.getElementById('branch').value];if(target){const p=map[target];viewport.scrollLeft=Math.max(0,(p.x-80)*zoom);viewport.scrollTop=Math.max(0,(p.y-240)*zoom)}};
 function show(id,move=false){const p=map[id];if(!p)return;current=id;document.querySelectorAll('.node').forEach(n=>n.classList.toggle('selected',n.id==='node-'+id));document.getElementById('dGen').textContent='Generation '+(p.gen+1)+' · '+p.status;document.getElementById('dName').textContent=p.name;document.getElementById('dBio').textContent=p.desc;document.getElementById('dStatus').textContent=p.birth+(p.spouse?' · Spouse/partner in family records: '+p.spouse:'');const names=(ids)=>ids?.map(x=>map[x]?.name).join(', ')||'Not recorded in this extract';document.getElementById('dRel').textContent='Parents: '+names(p.parents)+' | Children: '+names(p.children);const links=document.getElementById('dLinks');links.replaceChildren();if(p.profile){const a=document.createElement('a');a.href='profiles.html?person='+p.profile;a.textContent='Read biography →';links.appendChild(a)}if(id==='eric'){const a=document.createElement('a');a.className='secondary';a.href='wedding-eric-kathleen.html';a.textContent='Wedding photograph →';links.appendChild(a)}if(id==='maria'||id==='william'){const a=document.createElement('a');a.className='secondary';a.href=id==='maria'?'https://en.wikipedia.org/wiki/Maria_Billington_Hawes':'https://en.wikipedia.org/wiki/William_Hawes_(composer)';a.textContent='Historical biography ↗';a.target='_blank';a.rel='noopener';links.appendChild(a)}if(move){document.getElementById('personDetail').scrollIntoView({behavior:'smooth',block:'nearest'})}}
 size();show('william');markBranch();
+// Retrieve images actually embedded in the named Wikipedia articles.
+// pageimages may be empty for articles without an infobox, so inspect
+// the article's media list, identify a filename mentioning the sitter,
+// and then request its actual Wikimedia thumbnail URL.
+async function getArticlePortrait(title,person){
+  const api='https://en.wikipedia.org/w/api.php?origin=*&format=json&';
+  const r=await fetch(api+new URLSearchParams({action:'parse',page:title,prop:'images'}));
+  if(!r.ok)throw Error('Wikipedia unavailable');
+  const d=await r.json();
+  const files=d.parse?.images||[];
+  // Avoid mixing William the composer up with the earlier physician.
+  const candidates=files.filter(name=>{
+    const n=name.replace(/[_-]/g,' ').toLowerCase();
+    return /\\.(jpg|jpeg|png|webp)$/i.test(name)
+      && n.includes(person==='william'?'hawes':'maria')
+      && !/logo|icon|flag|map|ridley|physician|medical|coat of arms/i.test(n);
+  });
+  // Prefer pictures explicitly identifying the sitter.
+  const chosen=candidates.sort((a,b)=>{
+    const score=n=>{
+      n=n.toLowerCase();
+      return (n.includes('william hawes')&&person==='william'?10:0)
+        +(n.includes('maria')&&person==='maria'?10:0)
+        +(n.includes('medland')&&person==='william'?5:0);
+    };
+    return score(b)-score(a);
+  })[0];
+  if(!chosen) return null;
+  const q=await fetch(api+new URLSearchParams({
+    action:'query',prop:'imageinfo',iiprop:'url',iiurlwidth:'800',
+    titles:'File:'+chosen
+  }));
+  if(!q.ok)return null;
+  const data=await q.json();
+  const page=Object.values(data.query?.pages||{})[0];
+  const info=page?.imageinfo?.[0];
+  const url=info?.thumburl||info?.url;
+  if(!url||!url.startsWith('https://upload.wikimedia.org/'))return null;
+  return {src:url,file:chosen};
+}
 async function portraits(){
-  try {
-    const response=await fetch('images/portraits.json',{cache:'no-store'});
-    if(!response.ok)return;
-    const manifest=await response.json();
-    for(const p of people.filter(p=>p.wiki)){
-      const entry=manifest[p.id];
-      if(!entry?.src || !entry?.article)continue;
-      const image=document.querySelector('img[data-wiki="'+p.wiki+'"]');
-      if(image){image.src=entry.src;image.alt='Portrait from '+entry.article;image.onerror=()=>{image.remove()}}
-    }
-  }catch(e){/* The placeholders remain when no archived image is present. */}
+  for(const p of people.filter(p=>p.wiki)){
+    try{
+      const item=await getArticlePortrait(p.wiki,p.id);
+      if(!item)continue;
+      const img=document.querySelector('img[data-wiki="'+p.wiki+'"]');
+      if(!img)continue;
+      img.src=item.src;
+      img.alt='Portrait of '+p.name+' from Wikipedia: '+item.file;
+      img.addEventListener('error',()=>img.remove(),{once:true});
+    }catch(e){/* Keep neutral placeholders rather than show a wrong person. */}
+  }
 }
 portraits();
 </script></body></html>
