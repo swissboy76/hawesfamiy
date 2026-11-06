@@ -28,51 +28,23 @@ const wikipediaPortraits = {
   william: {title:'William_Hawes_(composer)', article:'https://en.wikipedia.org/wiki/William_Hawes_(composer)'},
   maria: {title:'Maria_Billington_Hawes', article:'https://en.wikipedia.org/wiki/Maria_Billington_Hawes'}
 };
-async function loadWikipediaPortraits(){
-  const api='https://en.wikipedia.org/w/api.php?origin=*&format=json&';
-  for(const [id,info] of Object.entries(wikipediaPortraits)){
-    try{
-      const res=await fetch(api+new URLSearchParams({action:'parse',page:info.title,prop:'images'}));
-      if(!res.ok)continue;
-      const parsed=await res.json();
-      const images=parsed.parse?.images||[];
-      const candidates=images.filter(file=>{
-        const name=file.replace(/[_-]/g,' ').toLowerCase();
-        return /\.(jpg|jpeg|png|webp)$/i.test(file)
-          && name.includes(id==='william'?'hawes':'maria')
-          && !/ridley|physician|logo|icon|flag|map|medical/i.test(name);
-      }).sort((a,b)=>{
-        const score=(name)=>((id==='william' && /william.hawes/i.test(name))?10:0)
-          +((id==='maria' && /maria/i.test(name))?10:0)
-          +((id==='william' && /medland/i.test(name))?5:0);
-        return score(b)-score(a);
-      });
-      if(!candidates.length)continue;
-      const q=await fetch(api+new URLSearchParams({action:'query',prop:'imageinfo',iiprop:'url',iiurlwidth:'800',titles:'File:'+candidates[0]}));
-      if(!q.ok)continue;
-      const data=await q.json();
-      const image=Object.values(data.query?.pages||{})[0]?.imageinfo?.[0];
-      const src=image?.thumburl||image?.url;
-      if(!src?.startsWith('https://upload.wikimedia.org/'))continue;
-      document.querySelectorAll('[data-portrait-person="'+id+'"]').forEach(slot=>{
-        const element=document.createElement('img');
-        element.src=src;
-        element.alt='Portrait of '+byId[id].name+' reproduced on Wikipedia';
-        element.loading='lazy';
-        element.onerror=()=>element.remove();
-        slot.appendChild(element);
-        const label=slot.querySelector('.no-photo');
-        if(label)label.textContent='Wikipedia portrait';
-      });
-      document.querySelectorAll('[data-credit-person="'+id+'"]').forEach(slot=>{
-        const a=document.createElement('a');
-        a.href=info.article;
-        a.target='_blank';
-        a.rel='noopener noreferrer';
-        a.textContent='Portrait source: Wikipedia ('+candidates[0]+')';
-        slot.appendChild(a);
-      });
-    }catch(e){/* Leave placeholder if Wikimedia cannot be reached. */}
+const localPortraits={william:'images/william-hawes.jpg',maria:'images/maria-billington-hawes.jpg'};
+function loadWikipediaPortraits(){
+  for(const [id,src] of Object.entries(localPortraits)){
+    document.querySelectorAll('[data-portrait-person="'+id+'"]').forEach(slot=>{
+      const img=document.createElement('img');
+      img.src=src;
+      img.alt='Family-supplied portrait of '+byId[id].name;
+      img.loading='lazy';
+      img.decoding='async';
+      img.onerror=()=>img.remove();
+      slot.appendChild(img);
+      const label=slot.querySelector('.no-photo');
+      if(label)label.textContent='Family-supplied portrait';
+    });
+    document.querySelectorAll('[data-credit-person="'+id+'"]').forEach(slot=>{
+      slot.textContent='Portrait supplied by the family, November 2026.';
+    });
   }
 }
 const profileUrl=id=>'?person='+encodeURIComponent(id);
