@@ -29,33 +29,51 @@ const wikipediaPortraits = {
   maria: {title:'Maria_Billington_Hawes', article:'https://en.wikipedia.org/wiki/Maria_Billington_Hawes'}
 };
 async function loadWikipediaPortraits(){
-  try{
-    const response=await fetch('images/portraits.json',{cache:'no-store'});
-    if(!response.ok)return;
-    const manifest=await response.json();
-    for(const [id,info] of Object.entries(wikipediaPortraits)){
-      const item=manifest[id];
-      if(!item?.src)continue;
+  const api='https://en.wikipedia.org/w/api.php?origin=*&format=json&';
+  for(const [id,info] of Object.entries(wikipediaPortraits)){
+    try{
+      const res=await fetch(api+new URLSearchParams({action:'parse',page:info.title,prop:'images'}));
+      if(!res.ok)continue;
+      const parsed=await res.json();
+      const images=parsed.parse?.images||[];
+      const candidates=images.filter(file=>{
+        const name=file.replace(/[_-]/g,' ').toLowerCase();
+        return /\.(jpg|jpeg|png|webp)$/i.test(file)
+          && name.includes(id==='william'?'hawes':'maria')
+          && !/ridley|physician|logo|icon|flag|map|medical/i.test(name);
+      }).sort((a,b)=>{
+        const score=(name)=>((id==='william' && /william.hawes/i.test(name))?10:0)
+          +((id==='maria' && /maria/i.test(name))?10:0)
+          +((id==='william' && /medland/i.test(name))?5:0);
+        return score(b)-score(a);
+      });
+      if(!candidates.length)continue;
+      const q=await fetch(api+new URLSearchParams({action:'query',prop:'imageinfo',iiprop:'url',iiurlwidth:'800',titles:'File:'+candidates[0]}));
+      if(!q.ok)continue;
+      const data=await q.json();
+      const image=Object.values(data.query?.pages||{})[0]?.imageinfo?.[0];
+      const src=image?.thumburl||image?.url;
+      if(!src?.startsWith('https://upload.wikimedia.org/'))continue;
       document.querySelectorAll('[data-portrait-person="'+id+'"]').forEach(slot=>{
-        const img=document.createElement('img');
-        img.src=item.src;
-        img.alt='Portrait from the Wikipedia biography of '+byId[id].name;
-        img.loading='lazy';
-        img.addEventListener('error',()=>img.remove());
-        slot.appendChild(img);
+        const element=document.createElement('img');
+        element.src=src;
+        element.alt='Portrait of '+byId[id].name+' reproduced on Wikipedia';
+        element.loading='lazy';
+        element.onerror=()=>element.remove();
+        slot.appendChild(element);
         const label=slot.querySelector('.no-photo');
         if(label)label.textContent='Wikipedia portrait';
       });
-      document.querySelectorAll('[data-credit-person="'+id+'"]').forEach(el=>{
-        const link=document.createElement('a');
-        link.href=item.article||info.article;
-        link.target='_blank';
-        link.rel='noopener noreferrer';
-        link.textContent='Portrait source and identification: Wikipedia';
-        el.appendChild(link);
+      document.querySelectorAll('[data-credit-person="'+id+'"]').forEach(slot=>{
+        const a=document.createElement('a');
+        a.href=info.article;
+        a.target='_blank';
+        a.rel='noopener noreferrer';
+        a.textContent='Portrait source: Wikipedia ('+candidates[0]+')';
+        slot.appendChild(a);
       });
-    }
-  }catch(e){/* Wait for verified portrait files, preserve neutral placeholders. */}
+    }catch(e){/* Leave placeholder if Wikimedia cannot be reached. */}
+  }
 }
 const profileUrl=id=>'?person='+encodeURIComponent(id);
 const icon='<svg class="silhouette" viewBox="0 0 90 115" aria-hidden="true"><circle cx="45" cy="30" r="23" fill="#655e4c"/><path d="M4 110c0-32 17-50 41-50s41 18 41 50" fill="#655e4c"/></svg>';
