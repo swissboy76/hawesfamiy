@@ -28,7 +28,7 @@ const wikipediaPortraits = {
   william: {title:'William_Hawes_(composer)', article:'https://en.wikipedia.org/wiki/William_Hawes_(composer)'},
   maria: {title:'Maria_Billington_Hawes', article:'https://en.wikipedia.org/wiki/Maria_Billington_Hawes'}
 };
-const localPortraits={william:'images/william-hawes.jpg',maria:'images/maria-billington-hawes.jpg'};
+const localPortraits={william:'images/william-hawes.jpg',maria:'images/maria-billington-hawes.jpg',eric:'images/eric-hawes.jpg'};
 function loadWikipediaPortraits(){
   for(const [id,src] of Object.entries(localPortraits)){
     document.querySelectorAll('[data-portrait-person="'+id+'"]').forEach(slot=>{
