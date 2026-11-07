@@ -18,7 +18,7 @@ Open questions include William Edward Wilson Hawes's occupation (family recollec
 Open `index.html` in any browser; there is no build step.
 
 ## Publish
-The repository is currently named `hawesfamiy` (missing the second L from `hawesfamily`) and is private.
+The repository is currently named `hawesfamiy` (missing the second L from `hawesfamily`) and is public.
 
 **Cloudflare Pages:** connect this GitHub repo, branch `main`, framework preset `None`, no build command, output directory `/`.
 
