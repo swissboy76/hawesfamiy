@@ -27,19 +27,14 @@ The repository is currently named `hawesfamiy` (missing the second L from `hawes
 Do not publish the complete GEDCOM or personal details of living relatives.
 
 
-## Cloudflare Pages and R2 (November 2026)
+## Cloudflare Pages and GitHub images (November 2026)
 
-Live project name: `hawesfamiy` — `https://hawesfamiy.pages.dev/`.
-GitHub remains the source of site code and historical research. Publish using Cloudflare Pages connected to the `main` branch, framework **None**, no build command, output directory `/` (repository root).
+Public site: https://hawesfamiy.pages.dev/
 
-### Bind private image storage
+The `main` branch of this repository is the source for the Cloudflare Pages site (framework None, no build command, output directory repository root). All website pages, historical research and published photographs are stored in GitHub. Historical images are ordinary binary JPEG files under `images/`, with references such as `images/william-hawes.jpg` or `../images/walter-hawes-pension-particulars.jpg`.
 
-1. Create/select Cloudflare R2 bucket `hawes-family-archive`.
-2. Cloudflare dashboard → Workers & Pages → `hawesfamiy` → Settings → Bindings → Add → R2 bucket.
-3. Set **Variable name** `ARCHIVE`; set **R2 bucket** `hawes-family-archive`. Save and redeploy. Also bind Preview if you need preview URLs to show photographs.
-4. Upload approved historical JPEGs to the **root of the R2 bucket**, with exactly the filenames listed in `functions/images/[filename].js`. Do not upload them into an `images/` folder: the endpoint already maps `/images/<name>` to the root key `<name>`.
-5. The site continues to refer to images as relative paths such as `images/william-hawes.jpg`. On Cloudflare Pages they are served by the function from private R2; there is no need to enable the R2 public development URL or set up a public bucket.
+The initial collection of 13 family-supplied photographs and archive scans was committed on 7 November 2026. No separate Cloudflare Worker, Pages Function, R2 bucket binding or public R2 access is needed for the published site. The `hawes-family-archive` bucket can remain unused.
 
-**Privacy:** The endpoint has an explicit allowlist. Uploading additional objects to R2 does not make them available through the public site. Keep originals or any documents involving living people in separate unlisted keys or, preferably, a separate private bucket. There is no public upload endpoint or credential in the repository.
+**Future additions:** Add approved historical photographs as binary objects to `images/` in GitHub and reference the correct filenames from biographies and source pages. Any unpublished or potentially living-person information requires privacy review before adding it to this public repository.
 
-**Troubleshooting:** `/images/william-hawes.jpg` returns 503 if the `ARCHIVE` binding is missing; 404 if the requested image has not been uploaded under the expected root key; and 200 with a JPEG once configured. The Pages-specific `_routes.json` restricts Function invocations to `/images/*` so regular static pages remain static.
+Cloudflare Pages deploys changes from the main branch automatically, assuming its GitHub deployment integration remains enabled.
