@@ -1,0 +1,507 @@
+[
+  {
+    "id": "st-george",
+    "title": "St George’s, Hanover Square",
+    "period": "1785 & 1805",
+    "people": [
+      [
+        "john0",
+        "John & Ann Hawes"
+      ],
+      [
+        "william",
+        "William Hawes"
+      ],
+      [
+        "elizabeth-mullinex",
+        "Elizabeth Mullinex"
+      ]
+    ],
+    "gen": 0,
+    "kind": "Parish connection",
+    "desc": "William’s birth and baptism extract names John and Ann Hawes. William and Elizabeth married here on 12 March 1805. The records connect the family to the parish but give no home address.",
+    "source": "sources/william-hawes-st-georges-registers.html",
+    "coords": [
+      51.5125,
+      -0.14278
+    ],
+    "precision": "Church location; the family’s street address is unknown.",
+    "image": "images/st-george-hanover-square.jpg",
+    "credit": "St George’s in 2006 · Hassocks5489 / Wikimedia Commons · public domain",
+    "crediturl": "https://commons.wikimedia.org/wiki/File:Church_of_St_George,_Mayfair.jpg",
+    "route": 1,
+    "geo": "https://www.stgeorgeshanoversquare.org/getting-here.html"
+  },
+  {
+    "id": "craven",
+    "title": "27 Craven Street",
+    "period": "c.1812–1817",
+    "people": [
+      [
+        "william",
+        "William Hawes"
+      ],
+      [
+        "elizabeth-mullinex",
+        "Elizabeth Mullinex"
+      ]
+    ],
+    "gen": 1,
+    "kind": "Home & choir school",
+    "desc": "Choir-school archival descriptions place William’s household and the St Paul’s Cathedral choristers at 27 Craven Street from about 1812, before the move to Adelphi Terrace in 1817.",
+    "source": "biographies/william.html",
+    "coords": [
+      51.50767,
+      -0.125
+    ],
+    "precision": "Approximate street location; historic doorway not verified.",
+    "image": null,
+    "credit": null,
+    "crediturl": null,
+    "route": 2,
+    "geo": "https://atom.aim25.com/index.php/saint-pauls-cathedral-choir-school"
+  },
+  {
+    "id": "adelphi",
+    "title": "7 Adelphi Terrace",
+    "period": "1817–1846; household recorded in 1841",
+    "people": [
+      [
+        "william",
+        "William Hawes"
+      ],
+      [
+        "elizabeth-mullinex",
+        "Elizabeth Mullinex"
+      ],
+      [
+        "henry",
+        "William Henry Bartleman Hawes"
+      ],
+      [
+        "maria",
+        "Maria Billington Hawes"
+      ]
+    ],
+    "gen": 1,
+    "kind": "Home & choir school",
+    "desc": "The family home also housed St Paul’s and Chapel Royal choristers. The 1841 household transcript places William, Elizabeth and younger family members here. The original riverfront terrace was demolished in the 1930s; today’s buildings are not the Hawes house.",
+    "source": "sources/1841-adelphi-terrace-household.html",
+    "coords": [
+      51.5086,
+      -0.1228
+    ],
+    "precision": "Approximate former terrace area; no claim to an exact surviving plot.",
+    "image": "images/adelphi-terrace-daniel-turner.jpg",
+    "credit": "Adelphi Terrace and York Watergate · Daniel Turner · Guildhall Art Gallery / Wikimedia Commons · public domain. A view of the terrace, not an identified view of No. 7.",
+    "crediturl": "https://commons.wikimedia.org/wiki/File:Adelphi_Terrace_and_York_Watergate,_London,_by_Daniel_Turner_GAG_1799.jpg",
+    "route": 3,
+    "geo": "https://www.soane.org/features/robert-adams-adelphi"
+  },
+  {
+    "id": "king-william",
+    "title": "12 King William Street, Trafalgar Square",
+    "period": "1844–1846",
+    "people": [
+      [
+        "henry",
+        "William Henry Bartleman Hawes"
+      ],
+      [
+        "sophia",
+        "Sophia Maria Davison Hawes"
+      ],
+      [
+        "edward",
+        "William Edward Wilson Hawes"
+      ],
+      [
+        "louisa",
+        "Elizabeth Louisa Georgina Hawes"
+      ]
+    ],
+    "gen": 2,
+    "kind": "Family address & medical practice",
+    "desc": "Family birth abstracts record William Edward’s birth here on 22 June 1844 and Elizabeth Louisa’s on 19 February 1846. A medical-directory entry also records the address. This is the West Strand street now called William IV Street, rather than King William Street in the City.",
+    "source": "sources/whbh-family-register-1844-1895.html",
+    "coords": [
+      51.5095,
+      -0.12548
+    ],
+    "precision": "Approximate modern street location; historical No. 12 not pinned.",
+    "image": null,
+    "credit": null,
+    "crediturl": null,
+    "route": null,
+    "geo": "https://www.londonpicturearchive.org.uk/view-item?i=142537"
+  },
+  {
+    "id": "arlington",
+    "title": "13 Arlington Street",
+    "period": "1848–1849",
+    "people": [
+      [
+        "henry",
+        "William Henry Bartleman Hawes"
+      ],
+      [
+        "sophia",
+        "Sophia Maria Davison Hawes"
+      ],
+      [
+        "richard1848",
+        "Richard Wesley Dowling Hawes"
+      ]
+    ],
+    "gen": 2,
+    "kind": "Birth & death address",
+    "desc": "The family abstracts give this address for Richard’s birth on 19 February 1848 and death on 6 October 1849. The precise street identification requires checking against the original certificates.",
+    "source": "sources/whbh-family-register-1844-1895.html",
+    "coords": null,
+    "precision": "Not pinned: the street identification is unresolved.",
+    "image": null,
+    "credit": null,
+    "crediturl": null,
+    "route": null,
+    "geo": null
+  },
+  {
+    "id": "strand355",
+    "title": "355 Strand, St Clement Danes",
+    "period": "1850",
+    "people": [
+      [
+        "henry",
+        "William Henry Bartleman Hawes"
+      ],
+      [
+        "sophia",
+        "Sophia Maria Davison Hawes"
+      ],
+      [
+        "maryemma",
+        "Mary Emma Hawes"
+      ]
+    ],
+    "gen": 2,
+    "kind": "Birth address",
+    "desc": "Mary Emma’s family birth abstract records her birth here on 7 November 1850. Historical numbering and the individual property still need to be matched to a period map.",
+    "source": "sources/whbh-family-register-1844-1895.html",
+    "coords": [
+      51.5114,
+      -0.119
+    ],
+    "precision": "Approximate central Strand area; not a verified building pin.",
+    "image": null,
+    "credit": null,
+    "crediturl": null,
+    "route": null,
+    "geo": null
+  },
+  {
+    "id": "strand406",
+    "title": "406 Strand",
+    "period": "1852–1853",
+    "people": [
+      [
+        "henry",
+        "William Henry Bartleman Hawes"
+      ],
+      [
+        "sophia",
+        "Sophia Maria Davison Hawes"
+      ],
+      [
+        "caroline1853",
+        "Caroline Maria Hawes"
+      ]
+    ],
+    "gen": 2,
+    "kind": "Surgery & family address",
+    "desc": "An 1852 directory lists William H. B. Hawes as a surgeon at 406 Strand. Caroline’s birth abstract gives the same address on 16 August 1853. The map places the Strand neighbourhood; it does not establish a surviving surgery building.",
+    "source": "biographies/henry.html",
+    "coords": [
+      51.5104,
+      -0.122
+    ],
+    "precision": "Approximate Strand area; historical frontage not verified.",
+    "image": null,
+    "credit": null,
+    "crediturl": null,
+    "route": 4,
+    "geo": null
+  },
+  {
+    "id": "montpelier",
+    "title": "23 Montpelier Square",
+    "period": "1871",
+    "people": [
+      [
+        "elizabeth-mullinex",
+        "Elizabeth Mullinex Hawes"
+      ]
+    ],
+    "gen": 1,
+    "kind": "Death address",
+    "desc": "Family records give this address for Elizabeth’s death on 3 May 1871. An original death record is still needed before treating it as a confirmed residence.",
+    "source": "biographies/elizabeth-mullinex.html",
+    "coords": [
+      51.4998,
+      -0.166
+    ],
+    "precision": "Square-level location; family-record address pending verification.",
+    "image": null,
+    "credit": null,
+    "crediturl": null,
+    "route": null,
+    "geo": null
+  },
+  {
+    "id": "thornton",
+    "title": "1 Parchmore Road, Thornton Heath",
+    "period": "c.1879 & 1909",
+    "people": [
+      [
+        "edward",
+        "William Edward Wilson Hawes"
+      ],
+      [
+        "mary-ellis",
+        "Mary Hawes — Walter’s mother"
+      ],
+      [
+        "walter",
+        "Walter Joseph William Hawes"
+      ],
+      [
+        "frances",
+        "Frances Ellen “Nellie” Creese"
+      ],
+      [
+        "eric",
+        "Eric William Valentine Hawes"
+      ]
+    ],
+    "gen": 3,
+    "kind": "Family-record birth address",
+    "desc": "Family records associate Walter’s birth around 1879 and Eric’s birth on 14 February 1909 with 1 Parchmore Road. The original birth records and historic numbering remain to be checked. The 1881 census reference separately places William Edward’s family in the Thornton Heath area.",
+    "source": "biographies/walter.html",
+    "coords": [
+      51.40273,
+      -0.10119
+    ],
+    "precision": "Street-area marker; No. 1 has not been verified on a historical map.",
+    "image": null,
+    "credit": null,
+    "crediturl": null,
+    "route": 5,
+    "geo": "https://www.streetlist.co.uk/cr/cr7/cr7-8/parchmore-road"
+  },
+  {
+    "id": "bedford",
+    "title": "119 Bedford Road, Stockwell",
+    "period": "1893–1895",
+    "people": [
+      [
+        "sophia",
+        "Sophia Maria Davison Hawes"
+      ],
+      [
+        "maryemma",
+        "Mary Emma Hawes"
+      ]
+    ],
+    "gen": 2,
+    "kind": "Death address",
+    "desc": "Family-held death abstracts place Mary Emma here on 8 December 1893 and Sophia here on 9 February 1895. The modern equivalent of the historical address remains to be confirmed.",
+    "source": "sources/whbh-family-register-1844-1895.html",
+    "coords": null,
+    "precision": "Not pinned: historical address and numbering still need verification.",
+    "image": null,
+    "credit": null,
+    "crediturl": null,
+    "route": null,
+    "geo": null
+  },
+  {
+    "id": "feltham",
+    "title": "Ashfield House, Feltham",
+    "period": "1900",
+    "people": [
+      [
+        "edward",
+        "William Edward Wilson Hawes"
+      ]
+    ],
+    "gen": 3,
+    "kind": "Death place",
+    "desc": "Family records give Ashfield House, Feltham, as William Edward’s place of death on 23 March 1900. The house has not yet been securely identified, so no property marker is shown.",
+    "source": "biographies/edward.html",
+    "coords": null,
+    "precision": "Not pinned: the house location is unresolved.",
+    "image": null,
+    "credit": null,
+    "crediturl": null,
+    "route": null,
+    "geo": null
+  },
+  {
+    "id": "anerley",
+    "title": "125a Croydon Road, Anerley",
+    "period": "1911",
+    "people": [
+      [
+        "mary-ellis",
+        "Mary Hawes — identification under review"
+      ],
+      [
+        "walter",
+        "Walter Joseph William Hawes"
+      ],
+      [
+        "frances",
+        "Frances Ellen “Nellie” Creese"
+      ],
+      [
+        "eric",
+        "Eric William Valentine Hawes"
+      ],
+      [
+        "george",
+        "George Walter Hawes"
+      ]
+    ],
+    "gen": 4,
+    "kind": "Census household · visitors",
+    "desc": "The 1911 return records Walter, Frances, Eric and George as visitors in the wider Hawes household. It establishes where they were on census night; it does not establish that this was their usual home. The photograph was supplied by the family as the modern view of this address.",
+    "source": "sources/1911-anerley-hawes-household.html",
+    "coords": [
+      51.407612,
+      -0.061131
+    ],
+    "precision": "Modern postcode-area marker (SE20 7TT); historic subdivision 125a not independently surveyed.",
+    "image": "images/125a-croydon-road-modern-view.jpg",
+    "credit": "Modern view supplied by the family as 125a Croydon Road. Google Street View attribution remains on the original image.",
+    "crediturl": "sources/1911-anerley-hawes-household.html",
+    "route": 6,
+    "geo": "https://www.getthedata.com/postcode/SE20-7TT"
+  },
+  {
+    "id": "gipsy",
+    "title": "46 Gipsy Hill",
+    "period": "1921 & 1939",
+    "people": [
+      [
+        "walter",
+        "Walter Joseph William Hawes"
+      ],
+      [
+        "frances",
+        "Frances Ellen “Nellie” Creese"
+      ],
+      [
+        "eric",
+        "Eric William Valentine Hawes"
+      ],
+      [
+        "george",
+        "George Walter Hawes"
+      ],
+      [
+        "gladys1913",
+        "Gladys Madeline Hawes"
+      ],
+      [
+        "mary",
+        "Mary Frances Hawes"
+      ]
+    ],
+    "gen": 5,
+    "kind": "Census & register address",
+    "desc": "The 1921 household includes Walter, Nellie and their children as boarders with Charles S. Bradley. Eric is recorded at the same address in the 1939 Register. These are two dated snapshots, rather than proof of uninterrupted occupation by every family member.",
+    "source": "sources/1921-46-gipsy-hill.html",
+    "coords": [
+      51.420716,
+      -0.083057
+    ],
+    "precision": "Modern postcode-area marker (SE19 1NL); not an exact historic front-door coordinate.",
+    "image": null,
+    "credit": null,
+    "crediturl": null,
+    "route": 7,
+    "geo": "https://www.getthedata.com/postcode/SE19-1NL"
+  },
+  {
+    "id": "burgh",
+    "title": "The Rectory, Burgh Castle",
+    "period": "1884",
+    "people": [
+      [
+        "thomas",
+        "Rev. Thomas Henry Hawes"
+      ],
+      [
+        "sophia-perkins",
+        "Sophia Louisa Perkins Hawes"
+      ]
+    ],
+    "gen": 2,
+    "kind": "Wider branch · death address",
+    "desc": "Family records give The Rectory, Burgh Castle, as Sophia Louisa’s death address on 13 October 1884. Historic England lists an Old Rectory in Church Road, but identifying that building with this entry still needs documentary confirmation.",
+    "source": "biographies/sophia-perkins.html",
+    "coords": null,
+    "precision": "Not pinned: the link to today’s Old Rectory is a research lead, not yet established.",
+    "image": null,
+    "credit": null,
+    "crediturl": null,
+    "route": null,
+    "geo": "https://historicengland.org.uk/listing/the-list/list-entry/1172236"
+  },
+  {
+    "id": "st-james",
+    "title": "9 St James’s Street",
+    "period": "Marriage abstract · year uncertain",
+    "people": [
+      [
+        "sophia",
+        "Sophia Maria Davison Hawes"
+      ]
+    ],
+    "gen": 2,
+    "kind": "Marriage residence",
+    "desc": "The copied family marriage abstract gives Sophia’s residence as 9 St James’s Street and William Henry’s as 7 Adelphi Terrace. The marriage year and exact historical property remain to be checked.",
+    "source": "sources/whbh-family-register-1844-1895.html",
+    "coords": [
+      51.5065,
+      -0.1394
+    ],
+    "precision": "Approximate St James’s Street area; historical No. 9 not pinned.",
+    "image": null,
+    "credit": null,
+    "crediturl": null,
+    "route": null,
+    "geo": null
+  },
+  {
+    "id": "strand243",
+    "title": "243 Strand",
+    "period": "Date not yet established",
+    "people": [
+      [
+        "henry",
+        "William Henry Bartleman Hawes"
+      ]
+    ],
+    "gen": 2,
+    "kind": "Family recollection",
+    "desc": "Family recollection associates William Henry with 243 Strand. The documented 1852 surgery address is 406 Strand. These must not be assumed to be the same premises or the same period without supporting records.",
+    "source": "biographies/henry.html",
+    "coords": null,
+    "precision": "Not pinned: date and precise association remain unresolved.",
+    "image": null,
+    "credit": null,
+    "crediturl": null,
+    "route": null,
+    "geo": null
+  }
+]
