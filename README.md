@@ -43,3 +43,6 @@ Cloudflare Pages deploys changes from the main branch automatically, assuming it
 
 ## Baseline and future additions
 The present tree and biographies form the established baseline. Refer to compiled genealogical material as “family records”; do not display file-format, import or revision history. Treat subsequent contributions as new additions. Preserve source citations, privacy protections and unresolved factual discrepancies.
+
+## Biography reading order
+Each individual biography begins with an identified portrait where available, followed by the narrative biography, then facts and dates. Keep document galleries, references and family connections after those sections. Use the shared biography-layout.css styling.
