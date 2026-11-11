@@ -1,6 +1,6 @@
 # The Hawes Family Archive
 
-An evidence-led, mobile-friendly shared Hawes family archive with an interactive branching tree, personal biographies, historical photographs, and research sources. It is designed for all branches of the family, without describing relationships relative to any individual visitor. Research sources include the Ancestry and Findmypast GEDCOM exports from 6 November 2026.
+An evidence-led, mobile-friendly shared Hawes family archive with an interactive branching tree, personal biographies, historical photographs, and research sources. It is designed for all branches of the family, without describing relationships relative to any individual visitor. Research sources include family records, original documents, census returns and parish and civil registers.
 
 ## Features
 - Interactive family-member cards with evidence notes
@@ -10,7 +10,7 @@ An evidence-led, mobile-friendly shared Hawes family archive with an interactive
 - Living-generation privacy by default
 
 ## Source policy
-The source GEDCOM is NOT included in this repository because it contains information about living family members. Family tree assertions and recollections are labelled separately from published contemporary evidence. No unverified portraits are presented as authentic.
+Private family records are not included in this public repository because they contain information about living family members. Family tree assertions and recollections are labelled separately from published contemporary evidence. No unverified portraits are presented as authentic.
 
 Open questions include William Edward Wilson Hawes's occupation (family recollection: banking), his Thornton Heath address (1881 census RG11/820 f.88 p.31), Walter Hawes's clerkship, the 243/406 Strand premises, and the duplicate Sophia Maria Davison/Day entries.
 
@@ -24,7 +24,7 @@ The repository is currently named `hawesfamiy` (missing the second L from `hawes
 
 **GitHub Pages:** Settings → Pages → Deploy from a branch → `main` → root. Availability for a private repository depends on your GitHub plan.
 
-Do not publish the complete GEDCOM or personal details of living relatives.
+Do not publish the complete family records or personal details of living relatives.
 
 
 ## Cloudflare Pages and GitHub images (November 2026)
@@ -38,3 +38,8 @@ The initial collection of 13 family-supplied photographs and archive scans was c
 **Future additions:** Add approved historical photographs as binary objects to `images/` in GitHub and reference the correct filenames from biographies and source pages. Any unpublished or potentially living-person information requires privacy review before adding it to this public repository.
 
 Cloudflare Pages deploys changes from the main branch automatically, assuming its GitHub deployment integration remains enabled.
+
+
+
+## Baseline and future additions
+The present tree and biographies form the established baseline. Refer to compiled genealogical material as “family records”; do not display file-format, import or revision history. Treat subsequent contributions as new additions. Preserve source citations, privacy protections and unresolved factual discrepancies.
