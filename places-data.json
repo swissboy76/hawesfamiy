@@ -55,9 +55,9 @@
       -0.125
     ],
     "precision": "Approximate street location; historic doorway not verified.",
-    "image": null,
-    "credit": null,
-    "crediturl": null,
+    "image": "images/craven-street-modern-view-june-2022.jpg",
+    "credit": "Craven Street · modern Google Street View screenshot, imagery dated June 2022, supplied by Antony Greenfield. This street view does not independently identify the historical No. 27.",
+    "crediturl": "images/craven-street-modern-view-june-2022.jpg",
     "route": 2,
     "geo": "https://atom.aim25.com/index.php/saint-pauls-cathedral-choir-school"
   },
