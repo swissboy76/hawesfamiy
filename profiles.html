@@ -39,7 +39,7 @@ const wikipediaPortraits = {
   william: {title:'William_Hawes_(composer)', article:'https://en.wikipedia.org/wiki/William_Hawes_(composer)'},
   maria: {title:'Maria_Billington_Hawes', article:'https://en.wikipedia.org/wiki/Maria_Billington_Hawes'}
 };
-const localPortraits={frances:'images/frances-ellen-nellie-original.jpg',mary:'images/mary-hawes-portrait-original.jpg',kathleen:'images/tree-kathleen.jpg',beryl:'images/tree-beryl.jpg',william:'images/william-hawes.jpg',walter:'images/tree-walter.jpg',eric:'images/tree-eric.jpg',george:'images/tree-george.jpg',gladys1913:'images/tree-madeline.jpg'};
+const localPortraits={"mary-ellis":"images/mary-hawes-walters-mother-original.png",edward:"images/william-edward-wilson-hawes-original.png",frances:'images/frances-ellen-nellie-original.jpg',mary:'images/mary-hawes-portrait-original.jpg',kathleen:'images/tree-kathleen.jpg',beryl:'images/tree-beryl.jpg',william:'images/william-hawes.jpg',walter:'images/tree-walter.jpg',eric:'images/tree-eric.jpg',george:'images/tree-george.jpg',gladys1913:'images/tree-madeline.jpg'};
 function loadWikipediaPortraits(){
   for(const [id,src] of Object.entries(localPortraits)){
     document.querySelectorAll('[data-portrait-person="'+id+'"]').forEach(slot=>{
