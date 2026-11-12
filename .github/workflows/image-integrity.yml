@@ -1,0 +1,24 @@
+name: Archive image integrity
+on:
+  push:
+    branches: [main]
+    paths:
+      - "images/**"
+      - "biographies/**"
+      - "photographs/**"
+      - "sources/**"
+      - "scripts/audit_images.py"
+      - ".github/workflows/image-integrity.yml"
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  inspect-images:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Check archival image checksums and file formats
+        run: python3 scripts/audit_images.py
